@@ -1,0 +1,19 @@
+#imports
+import os
+import google.generativeai as genai
+from ai.base import AIPlatform
+
+class Gemini_flash_2_5(AIPlatform):
+    def __init__(self,api_key: str, system_prompt: str = None):
+        self.api_key = api_key
+        self.system_prompt = system_prompt
+        genai.configure(api_key = self.api_key)
+        self.model = genai.GenerativeModel("gemini-2.5-flash-lite")
+    
+    def chat(self,prompt: str) ->str:
+        if self.system_prompt:
+            prompt = f"{self.system_prompt}\n\n{prompt}"
+        print("Generating Response")
+        response = self.model.generate_content(prompt)
+        print("Response Generated")
+        return response.text

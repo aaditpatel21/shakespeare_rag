@@ -1,0 +1,9 @@
+sqlalchemy
+google-generativeai
+pgvector
+pypdf
+sentence-transformers
+psycopg2-binary
+beautifulsoup4
+python-dotenv
+pandas

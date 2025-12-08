@@ -1,0 +1,6 @@
+.env
+.venv
+shakespeare-master
+__pycache__/
+
+eval_results/*.csv

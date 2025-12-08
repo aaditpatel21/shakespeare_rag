@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "name": "pgvector",
+            "database": "postgres",
+            "username": "postgress",
+            "connectString": "postgres://postgres:pgpass123@localhost:5433/postgres"
+        }
+    ]
+}
