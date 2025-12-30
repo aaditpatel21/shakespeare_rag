@@ -33,7 +33,7 @@ from rag.shakespeare_rag import shakespeare_rag
 #user_prompt = "Between whom does a “merry war” of words go on in Shakespeare’s Much Ado About Nothing?"
 user_prompt = 'Which of these plays by Shakespeare uses a statue to reveal a most dramatic secret?'
 #user_prompt = 'What is the name of the penniless Venetian who asks his friend for a loan in The Merchant of Venice?'
-user_prompt = 'Which of Shakespeare’s title roles has the fewest lines?'
+#user_prompt = 'Which of Shakespeare’s title roles has the fewest lines?'
 
 
 

@@ -1,7 +1,7 @@
 #imports
 import os
 import google.generativeai as genai
-from ai.base import AIPlatform
+from .base import AIPlatform
 
 class Gemini_flash_2_5(AIPlatform):
     def __init__(self,api_key: str, system_prompt: str = None):

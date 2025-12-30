@@ -36,3 +36,16 @@ Generated always as (to_tsvector('english',play_name || ' ' || content)) STORED;
 Create index if not exists idx_keyword_search
 on shakespeare_embeddings using GIN(text_search)
 
+
+-- User and Chat history
+Create table if not exists chathistory(
+    id SERIAL primary key,
+    user_id int,
+    role text,
+    content text,
+    time timestamp
+
+)
+
+
+

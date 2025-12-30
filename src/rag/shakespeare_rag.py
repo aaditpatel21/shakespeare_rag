@@ -2,13 +2,14 @@ import os
 import re
 import json
 from sentence_transformers import SentenceTransformer, CrossEncoder
-from postgres.database import session, Shakespearechunks
+from src.postgres.database import session, Shakespearechunks
 from dotenv import load_dotenv
 from sqlalchemy import text
 
+
 class shakespeare_rag:
 
-    def __init__(self):
+    def __init__(self, retriever = None, main_ai = None):
         print("Loading Embedding Model...")
         self.model = SentenceTransformer("all-MiniLM-L6-v2")
         print("Model loaded")
@@ -16,6 +17,13 @@ class shakespeare_rag:
         print("Loading Reranker Model...")
         self.reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
         print("Reranker Loaded")
+
+        print("Loading Gemini Term Based Retriever Model...")
+        self.retriever_ai = retriever
+
+        print("Loading Main Gemini Model...")
+        self.main_ai = main_ai
+
     
     def retrieve_embedded_data(self,query, k =5):
         load_dotenv()
@@ -102,3 +110,23 @@ class shakespeare_rag:
         except json.JSONDecodeError:
             return []
 
+    def run_full_rag(self,query,kv = 50, kt = 5, kr = 5 ):
+        #Automatically runs rag pipeline, used by fast api
+        #embedding based retrieval
+        chunks1 = self.retrieve_embedded_data(query,k =kv)
+        #term based retrieval
+        retrieval_query = self.keyword_query_expansion_prompt(query,self.retriever_ai)
+        
+        for q in retrieval_query:
+            chunk = self.retrieve_term_based_search(q, k = kt)
+            #print(len(chunk))
+            chunks1 += chunk
+
+        reranked_scores, chunks_only = self.reranking(query,chunks1,kr)
+        full_prompt = self.generate_query_context(query,chunks_only)
+
+        return full_prompt
+    
+    def generate_answer(self,prompt):
+        response_text = self.main_ai.chat(prompt)
+        return response_text
