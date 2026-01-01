@@ -2,14 +2,15 @@ import os
 import re
 import json
 from sentence_transformers import SentenceTransformer, CrossEncoder
-from src.postgres.database import session, Shakespearechunks
+from src.postgres.database import session, Shakespearechunks, getdb
 from dotenv import load_dotenv
 from sqlalchemy import text
+from src.postgres.database import session
 
 
 class shakespeare_rag:
 
-    def __init__(self, retriever = None, main_ai = None):
+    def __init__(self, retriever = None, main_ai = None, history_ai = None):
         print("Loading Embedding Model...")
         self.model = SentenceTransformer("all-MiniLM-L6-v2")
         print("Model loaded")
@@ -21,12 +22,14 @@ class shakespeare_rag:
         print("Loading Gemini Term Based Retriever Model...")
         self.retriever_ai = retriever
 
+        print("Loading History Context Gemini Model...")
+        self.history_ai = history_ai
+
         print("Loading Main Gemini Model...")
         self.main_ai = main_ai
 
     
     def retrieve_embedded_data(self,query, k =5):
-        load_dotenv()
         print("Retrieving Embedding data...")
         sql_session = session()
         #sql_session.execute(text(f"SET hnsw.ef_search = {k}"))
@@ -63,7 +66,7 @@ class shakespeare_rag:
         return  topk_chunks_with_score,chunks_only
 
 
-    def generate_query_context(self,query,chunks):
+    def generate_query_context(self,query,chunks,history = ''):
 
         query_context = ""
         i = 0
@@ -74,7 +77,8 @@ class shakespeare_rag:
             query_context += f"\n-Chunk {i}-\nPlay Name: {playname}\n Chunk MetaData: {metadata} \nText: {chunk.content}\n"
 
         #full_prompt = f"---System Instructions---\n {system_instructions} \n\n ---Context---\n {query_context}\n\n  ---User Question---\n {query}"
-        full_prompt = f"---Context---\n {query_context}\n\n  ---User Question---\n {query}"
+        #full_prompt = f"---History---\n {history}\n\n---New Context---\n {query_context}\n\n ---New User Question---\n {query}"
+        full_prompt = f"---New Context---\n {query_context}\n\n---Chat History---\n {history}\n\n ---New User Question---\n {query}"
 
 
         return full_prompt
@@ -109,9 +113,18 @@ class shakespeare_rag:
             return prompts
         except json.JSONDecodeError:
             return []
+    
+    def history_context_query_rewritten(self,query):
+        rewritten_query = self.history_ai.chat(query)
+        return rewritten_query
 
-    def run_full_rag(self,query,kv = 50, kt = 5, kr = 5 ):
+    def run_full_rag(self,query,history,kv = 50, kt = 5, kr = 5 ):
         #Automatically runs rag pipeline, used by fast api
+        
+        #rewrite query to take history context
+        query = self.history_context_query_rewritten(query)
+        print(query)
+
         #embedding based retrieval
         chunks1 = self.retrieve_embedded_data(query,k =kv)
         #term based retrieval
@@ -123,7 +136,7 @@ class shakespeare_rag:
             chunks1 += chunk
 
         reranked_scores, chunks_only = self.reranking(query,chunks1,kr)
-        full_prompt = self.generate_query_context(query,chunks_only)
+        full_prompt = self.generate_query_context(query,chunks_only,history)
 
         return full_prompt
     

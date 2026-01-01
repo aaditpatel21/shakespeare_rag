@@ -48,4 +48,6 @@ Create table if not exists chathistory(
 )
 
 
+select * from chathistory
 
+alter table chathistory alter column user_id type text

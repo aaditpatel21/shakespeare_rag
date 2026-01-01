@@ -1,9 +1,13 @@
 import os
 from typing import Optional
-from fastapi import Depends
+from fastapi import Depends, Header
 from fastapi.security import OAuth2PasswordBearer
+from sqlalchemy.orm import Session
 from jose import jwt
+import uuid
 
+
+'''
 SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 ALGORITHM = "HS256"
 
@@ -16,4 +20,11 @@ async def get_user_identifier(token: Optional[str] = Depends(oauth2_scheme)):
     username: str = payload.get("sub")
     return username
 
+'''
 
+
+async def get_user_identifier(x_user_id: str = Header(None)) -> str:
+    if not x_user_id:
+        x_user_id = f"temp_{uuid.uuid4()}"
+    
+    return x_user_id

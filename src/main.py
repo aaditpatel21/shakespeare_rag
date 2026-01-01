@@ -33,12 +33,14 @@ async def lifespan(app: FastAPI):
         
         system_prompt = load_system_prompt("src/prompts/system_prompt.md")
         retrieval_prompt = load_system_prompt("src/prompts/keyword_retriever_prompt.md")
+        history_context_prompt = load_system_prompt("src/prompts/history_context_prompt.md")
         
         ai_platform = Gemini_flash_2_5(gemini_api_key,system_prompt)
         retriever_ai = Gemini_flash_2_5(gemini_api_key,retrieval_prompt)
+        history_ai = Gemini_flash_2_5(gemini_api_key,history_context_prompt)
 
 
-        app.state.rag_engine = shakespeare_rag(retriever=retriever_ai, main_ai=ai_platform)
+        app.state.rag_engine = shakespeare_rag(retriever=retriever_ai, main_ai=ai_platform, history_ai= history_ai)
         print("Loaded Successfully.")
     except Exception as e:
         print(f'Failed to load engine: {e}')

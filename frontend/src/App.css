@@ -1,7 +1,7 @@
 /* Reset & Base */
 :root {
   --bg-color: #121212;
-  --surface-color: #1e1e1e;
+  --surface-color: rgba(30, 30, 30, 0.85); /* Made slightly transparent */
   --primary-color: #7c4dff; /* Shakespeare Purple */
   --user-msg-color: #2b2b2b;
   --bot-msg-color: #2c2c35;
@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: var(--bg-color);
+  background-color: transparent; /* UPDATED: Changed from var(--bg-color) to transparent so collage shows */
   color: var(--text-color);
   margin: 0;
   font-family: 'Inter', system-ui, sans-serif;
@@ -18,6 +18,7 @@ body {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  position: relative; /* For absolute positioning of collage */
 }
 
 #root {
@@ -26,23 +27,78 @@ body {
   justify-content: center;
 }
 
+/* --- New Collage Styles --- */
+.collage-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* Push behind everything */
+  overflow: hidden;
+  /* UPDATED: Brighter Purple Gradient */
+  background: radial-gradient(circle at center, #5b3a99 0%, #050505 100%);
+}
+
+.collage-item {
+  position: absolute;
+  width: 350px; /* Made slightly larger */
+  opacity: 0; /* Start hidden for animation */
+  /* UPDATED: Brighter filter so they pop against the dark background */
+  filter: grayscale(40%) sepia(20%) brightness(0.9);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border-radius: 12px;
+  animation: floatIn 2s ease-out forwards;
+  object-fit: cover; /* Ensures images don't stretch weirdly */
+}
+
+.collage-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* UPDATED: Lighter overlay so images are more visible */
+  background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(18,18,18,0.8) 100%);
+  pointer-events: none;
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.9);
+  }
+  to {
+    opacity: 0.7; /* UPDATED: Increased visibility (was 0.4) */
+    /* Transform is handled inline by React */
+  }
+}
+
+/* Update app-container to float above */
 .app-container {
   width: 100%;
   max-width: 900px;
-  height: 100vh;
+  height: 90vh; /* Give it some breathing room */
+  margin-top: 5vh; /* Center vertically */
   display: flex;
   flex-direction: column;
-  background: var(--surface-color);
+  background: var(--surface-color); /* Glassmorphismish */
+  backdrop-filter: blur(20px); /* Blur the collage behind */
   position: relative;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
 /* Header */
 header {
   padding: 1rem 1.5rem;
   border-bottom: 1px solid rgba(255,255,255,0.05);
-  background: rgba(30, 30, 30, 0.95);
+  background: rgba(30, 30, 30, 0.4); /* More transparency */
   backdrop-filter: blur(10px);
   z-index: 10;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 }
 
 .header-content h1 {
@@ -210,7 +266,8 @@ header {
 .input-area {
   padding: 1.5rem;
   background: var(--surface-color);
-  /* Optional: border-top if desired, but surface color usually blends nicely */
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
 }
 
 .input-wrapper {
