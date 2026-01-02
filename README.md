@@ -8,8 +8,8 @@ Unlike naive RAG systems, this engine employs a **Two-Stage Hybrid Pipeline** (D
 
 ## **🚀 Live Demo**
 
-* **Frontend:** \[[Link to your Vercel/Amplify App\](https://main.d1np57mpw4ip2u.amplifyapp.com)]  
-* **API Documentation:** \[[Link to your HuggingFace/AWS API\](https://mtsre2cmst.us-east-1.awsapprunner.com/docs)]/docs
+* **Frontend:** \[Link to your Vercel/Amplify App\](https://main.d1np57mpw4ip2u.amplifyapp.com) 
+* **API Documentation:** \[Link to your HuggingFace/AWS API\](https://mtsre2cmst.us-east-1.awsapprunner.com/docs)/docs
 
 ## **🧠 Key Engineering Features**
 
