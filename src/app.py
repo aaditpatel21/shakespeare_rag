@@ -72,7 +72,7 @@ for q in retrieval_query:
     #print(len(chunk))
     chunks1 += chunk
 
-#merge chunks
+#merge chunkss
 #chunks = chunks1 + chunks2
 
 #print(type(chunks1),len(chunks1))
