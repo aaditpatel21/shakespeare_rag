@@ -8,8 +8,8 @@ Unlike naive RAG systems, this engine employs a **Two-Stage Hybrid Pipeline** (D
 
 ## **🚀 Live Demo**
 
-* **Frontend:** \https://main.d1np57mpw4ip2u.amplifyapp.com 
-* **API Documentation:** \https://mtsre2cmst.us-east-1.awsapprunner.com/docs
+* **Frontend:** https://main.d1np57mpw4ip2u.amplifyapp.com 
+* **API Documentation:** https://mtsre2cmst.us-east-1.awsapprunner.com/docs
 
 ## **🧠 Key Engineering Features**
 
