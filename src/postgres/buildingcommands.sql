@@ -1,11 +1,16 @@
 
+-- ADD pgvector
+create extension if not exists vector;
+
+
 -- Create Table for shakespeare plays embedded for RAG
 CREATE TABLE IF NOT EXISTS shakespeare_embeddings (
 
     id SERIAL PRIMARY KEY,
     play_name varchar(255),
     content TEXT,
-    embedding vector(384)
+    embedding vector(384),
+    meta_data JSONB
 
 )
 
@@ -40,7 +45,7 @@ on shakespeare_embeddings using GIN(text_search)
 -- User and Chat history
 Create table if not exists chathistory(
     id SERIAL primary key,
-    user_id int,
+    user_id text,
     role text,
     content text,
     time timestamp
@@ -48,6 +53,4 @@ Create table if not exists chathistory(
 )
 
 
-select * from chathistory
-
-alter table chathistory alter column user_id type text
+select * from chathistory order by id asc

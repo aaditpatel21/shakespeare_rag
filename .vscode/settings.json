@@ -9,6 +9,22 @@
             "database": "postgres",
             "username": "postgress",
             "connectString": "postgres://postgres:pgpass123@localhost:5433/postgres"
+        },
+        {
+            "pgOptions": {
+                "ssl": {
+                    "rejectUnauthorized": false
+                }
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "shakespearedb.ct04yuiken7d.us-east-2.rds.amazonaws.com",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "aws db",
+            "database": "postgres",
+            "username": "postgres",
+            "password": "Shakespearerag!"
         }
     ]
 }

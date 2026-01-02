@@ -20,7 +20,7 @@ async def chat_endpoint(request: Request , chatrequest: ChatRequest, user_id: st
     if not rag_engine:
         raise HTTPException(status_code=503, detail= "RAG Engine error")
     
-    history = db.query(chathistory).filter(chathistory.user_id == user_id).order_by(chathistory.time.desc()).limit(5).all()
+    history = db.query(chathistory).filter(chathistory.user_id == user_id).order_by(chathistory.time.desc()).limit(6).all()
     chat_history = [{"role": h.role, "content": h.content} for h in reversed(history)]
 
     #Run Full Rag

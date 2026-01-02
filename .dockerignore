@@ -1,0 +1,11 @@
+.git/
+
+.venv/ venv/
+
+pycache/*.py[cod]
+
+.env
+
+shakespeare-master/
+frontend/
+eval_results/
