@@ -98,7 +98,7 @@ sequenceDiagram
 
 **1\. Clone the repo**
 
-git clone \[https://github.com/aaditpatel21/shakespeare-rag.git\](https://github.com/aaditpatel21/shakespeare-rag.git)  
+git clone \[https://github.com/aaditpatel21/shakespeare_rag.git](https://github.com/aaditpatel21/shakespeare_rag.git)  
 cd shakespeare-rag
 
 2\. Setup Environment  
