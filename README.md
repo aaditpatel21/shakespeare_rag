@@ -51,7 +51,7 @@ To balance cost and accuracy, the system uses a funnel approach:
 
 * **Framework:** FastAPI (Async/Sync Hybrid Architecture)  
 * **LLM:** Google Gemini 2.5 Flash  
-* **Vector DB:** PostgreSQL (pgvector \+ tsvector)  
+* **Vector DB:** PostgreSQL (pgvector \+ tsvector) on AWS RDS
 * **Embedding Model:** all-MiniLM-L6-v2 (384d)  
 * **Re-ranker:** cross-encoder/ms-marco-MiniLM-L-6-v2
 
@@ -64,7 +64,7 @@ To balance cost and accuracy, the system uses a funnel approach:
 ### **DevOps**
 
 * **Containerization:** Docker (Multi-stage builds)  
-* **Hosting:** AWS App Runner / Hugging Face Spaces (Docker) \+ Vercel (Frontend)  
+* **Hosting:** AWS App Runner / ECR \+ Amplify (Frontend)  
 * **CI/CD:** Manual Docker Push \-\> Automatic Cloud Deploy
 
 ## **📂 Architecture**
