@@ -43,7 +43,7 @@ To balance cost and accuracy, the system uses a funnel approach:
 | **Answer Accuracy** | 47.3% | **82.5%** | \+35.2% |
 | **Quote Retrieval** | 43.0% | **88.0%** | \+45% |
 
-*\> Note: The dramatic increase in Quote Retrieval is due to the implementation of BM25/Keyword search alongside Vectors.*
+*\> Note: The dramatic increase in Quote Retrieval is due to the implementation of TF-IDF/Keyword search alongside Vectors.*
 
 ## **🛠️ Tech Stack**
 
